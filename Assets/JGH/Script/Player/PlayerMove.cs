@@ -4,11 +4,13 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("Speed Settings")]
     // 걷기 속도
-    public static float m_walkSpeed = 5f;
+    public static float WalkSpeed = 5f;
     // 뛰기 속도
     private float m_runSpeed = 10f;
+    // 아이템 증가 속도
+    public static float ItemSpeed = 0f;
     // 현재 속도를 걷기나 뛰기 속도를 저장
-    public static float m_speed;
+    public static float Speed;
     // 떨어지는 속도
     private float m_fallSpeed = -28.0f;
     // 전체적인 이동 속도 계산
@@ -79,17 +81,17 @@ public class PlayerMove : MonoBehaviour
 
         if (GameManager.Instance.Input.RunKeyBeingHeld)
         {
-            m_speed = m_runSpeed;
+            Speed = m_runSpeed;
             if (moveX != 0 || moveZ != 0) PlayerHealth.StaminaMinus();
             else PlayerHealth.StaminaPlus();
         }
         else
         {
-            m_speed = m_walkSpeed;
+            Speed = WalkSpeed;
             PlayerHealth.StaminaPlus();
         }
 
-        PlayerController.PlayerCont.Move( m_speed * Time.deltaTime * move);
+        PlayerController.PlayerCont.Move( (Speed + ItemSpeed) * Time.deltaTime * move);
         
         m_velocity.y += m_fallSpeed * Time.deltaTime;
         PlayerController.PlayerCont.Move(m_velocity * Time.deltaTime);

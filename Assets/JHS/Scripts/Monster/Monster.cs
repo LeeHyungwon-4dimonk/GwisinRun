@@ -19,8 +19,14 @@ public class Monster : MonoBehaviour
     [Header("References")]
     public FieldOfViewSystem    fieldOfViewSystem;
     public NavMeshAgent         navMesh;
-
+    [Header("Movement")]
+    public float rotationSpeed = 5f; // 회전 속도
     //===========================================================
+    [Header("Combat Settings")]
+    public float attackRange = 2.0f;
+    public float attackCooldown = 2.0f;
+    private bool isAttacking = false; // 공격 중 상태
+    private float lastAttackTime = 0f;
     public  StateMachine<MonsterState> FSM { get; private set; }
     private Coroutine           customCoroutine;
     private void Awake()
@@ -39,6 +45,7 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
+        LookAtTarget(fieldOfViewSystem.currentTarget);
         if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
         {
             navMesh.isStopped = true;
@@ -59,7 +66,7 @@ public class Monster : MonoBehaviour
         fieldOfViewSystem.OnTargetDistanceChanged += HandleTargetDistanceChanged;
         fieldOfViewSystem.OnLastKnownPositionUpdated += HandleLastKnownPositionUpdated;
     }
-    private bool isAttacking = false; // 공격 중 상태
+
 
     public void SetAttacking(bool attacking)
     {
@@ -70,9 +77,21 @@ public class Monster : MonoBehaviour
     {
         return isAttacking;
     }
+
+    public bool CanAttack()
+    {
+        return Time.time >= lastAttackTime + attackCooldown;
+    }
+
+    // 공격 시작 시 호출
+    public void StartAttack()
+    {
+        lastAttackTime = Time.time;
+        Debug.Log($"Monster attack started, next attack available at: {lastAttackTime + attackCooldown}");
+    }
+
     private void HandleTargetDetected(Transform target)
     {
-
         // 공격 중에는 다른 상태로 전환되지 않도록 막음
         if (isAttacking) return;
 
@@ -86,7 +105,6 @@ public class Monster : MonoBehaviour
                 break;
         // 이미 추적 중이거나 공격 중이면 상태 변경 필요 없음
         }
-
     }
 
     private void HandleTargetLost()
@@ -103,16 +121,14 @@ public class Monster : MonoBehaviour
     
     private void HandleTargetDistanceChanged(float distance)
     {
-        // 거리에 따른 공격 판단
-        const float attackRange = 2.0f; // 적절한 공격 범위 설정
+        // 명확한 로그 추가
+        Debug.Log($"Distance changed: {distance}, Attack range: {attackRange}, Can attack: {CanAttack()}, Current state: {FSM.CurrentState}");
         
-        if (!isAttacking && distance < attackRange && FSM.CurrentState == MonsterState.Chase)
+        // 공격 가능 상태이고, 추적 중이며, 거리가 가까우면 공격
+        if (!isAttacking && CanAttack() && distance <= attackRange && FSM.CurrentState == MonsterState.Chase)
         {
+            Debug.Log("Transitioning to Attack state");
             FSM.ChangeState(MonsterState.Attack);
-        }
-        else if (!isAttacking && distance > attackRange && FSM.CurrentState == MonsterState.Attack)
-        {
-            FSM.ChangeState(MonsterState.Chase);
         }
     }
     
@@ -166,6 +182,23 @@ public class Monster : MonoBehaviour
         if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, searchRadius, NavMesh.AllAreas))
         {
             navMesh.SetDestination(hit.position);
+        }
+    }
+
+    public void LookAtTarget(Transform target)
+    {
+        if (target == null) return;
+        
+        Vector3 direction = (target.position - transform.position).normalized;
+        direction.y = 0; // y축 회전만 적용
+        
+        if (direction != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation, 
+                lookRotation, 
+                Time.deltaTime * rotationSpeed); // 회전 속도 조절
         }
     }
 }

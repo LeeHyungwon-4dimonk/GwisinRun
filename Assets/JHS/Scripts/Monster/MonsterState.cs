@@ -153,12 +153,21 @@ public class MonsterChaseState : FsmState<MonsterState>
     {
         while (true)
         {
-            // 직접 타겟을 찾는 대신 currentTarget 사용
             if (monster.fieldOfViewSystem.currentTarget != null)
             {
-                monster.navMesh.SetDestination(monster.fieldOfViewSystem.currentTarget.position);
+                Transform target = monster.fieldOfViewSystem.currentTarget;
+                monster.navMesh.SetDestination(target.position);
+                
+                // OnTargetDistanceChanged 이벤트가 제대로 동작하지 않을 경우를 대비한 보조 로직
+                float distanceToTarget = Vector3.Distance(monster.transform.position, target.position);
+                if (distanceToTarget <= monster.attackRange && monster.CanAttack() && !monster.IsAttacking())
+                {
+                    Debug.Log("ChaseRoutine detected attack range - changing to Attack state");
+                    monster.FSM.ChangeState(MonsterState.Attack);
+                    yield break;
+                }
             }
-            // 타겟 손실은 이벤트로 처리하므로 여기서 검사할 필요 없음
+            
             yield return new WaitForSeconds(monster.stateTickDelay);
         }
     }
@@ -177,50 +186,56 @@ public class MonsterAttackState : FsmState<MonsterState>
     
     public override void OnEnter(MonsterState fromState, FsmMessage msg)
     {
-        // 공격 시작 시 몬스터의 공격 중 상태 설정
+        Debug.Log("MonsterAttackState 시작");
         monster.SetAttacking(true);
-        
-        // NavMesh 이동 중지
-        monster.navMesh.isStopped = true;
-        
+        monster.StartAttack(); // 공격 시작 시간 기록
         monster.StartCustomCoroutine(Attack());
     }
     
 
     public override void OnExit(MonsterState toState)
     {
-        monster.SetAttacking(false);
-
-        // NavMesh 이동 재개
-        monster.navMesh.isStopped = false;
-
+        Debug.Log("MonsterAttackState 종료");
+        monster.SetAttacking(false); // 중요: 공격 상태 해제
         monster.StopCustomCoroutine();
     }
 
     private IEnumerator Attack()
     {
         Debug.Log("공격 시작");
-        
-        // 공격 애니메이션이나 효과를 여기에 추가
         monster.animator.SetTrigger("IsAttacking");
-        // (250502) 데미지 처리 추가 :: S
+        
+        // 애니메이션 타이밍에 맞춰 데미지 처리
+        yield return new WaitForSeconds(0.5f);
+        
         if (monster.fieldOfViewSystem.currentTarget != null)
         {
-            IDamageable damageable = monster.fieldOfViewSystem.currentTarget.root.GetComponent<IDamageable>();
-            if (damageable != null)
+            // 타겟이 공격 범위 내에 있는지 최종 확인
+            float currentDistance = Vector3.Distance(
+                monster.transform.position, 
+                monster.fieldOfViewSystem.currentTarget.position
+            );
+            
+            if (currentDistance <= monster.attackRange * 1.2f) // 약간의 여유
             {
-                // 250503 EDIT :: S
-                damageable.TakeDamage(monster.fieldOfViewSystem.MonsterPower); // 원하는 데미지 값
-                // 250503 EDIT :: E
+                // 데미지 처리
+                IDamageable damageable = monster.fieldOfViewSystem.currentTarget.GetComponent<IDamageable>();
+                if (damageable != null)
+                {
+                    // 250503 EDIT :: S
+                    damageable.TakeDamage(monster.fieldOfViewSystem.MonsterPower); // 원하는 데미지 값
+                    // 250503 EDIT :: E
+                    Debug.Log("데미지 적용!");
+                }
             }
-        } 
-        // (250502) 데미지 처리 추가 :: E
+        }
         
-        yield return new WaitForSeconds(3f);
+        // 공격 애니메이션 완료 대기
+        yield return new WaitForSeconds(1.5f);
         
         Debug.Log("공격 종료");
         
-        // 공격 후 상태 결정 (타겟이 있으면 추적, 없으면 탐색)
+        // 중요: 공격 후 추적 상태로 돌아가서 거리 확인 후 다시 공격할 수 있게 함
         if (monster.fieldOfViewSystem.currentTarget != null)
         {
             monster.FSM.ChangeState(MonsterState.Chase);

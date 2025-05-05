@@ -5,5 +5,6 @@
      //# UsableItem
      HeartPotion,
      SpeedPotion,
+     StaminaPotion,
      FlashLight,
 }

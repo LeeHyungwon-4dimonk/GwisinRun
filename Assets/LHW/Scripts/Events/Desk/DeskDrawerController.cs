@@ -3,27 +3,26 @@ using UnityEngine;
 public class DeskDrawerController : MonoBehaviour, IInteractable
 {
     private Animator m_animator;
-    private Material[] mat = new Material[2];
-    private bool isDetected = false;
-    [SerializeField] private Material m_material1;
-    [SerializeField] private Material m_material2;
+    // private Material[] mat = new Material[2];
+    // private bool isDetected = false;
+    // [SerializeField] private Material m_material1;
+    // [SerializeField] private Material m_material2;
 
     void Awake()
     {
         m_animator = GetComponent<Animator>();
-        mat[0] = m_material1;
-        mat[1] = m_material2;
+        // mat[0] = m_material1;
+        // mat[1] = m_material2;
     }
 
     private void Update()
     {
-        ChangeMat(isDetected);
+        //ChangeMat(isDetected);
     }
 
     public void Interact()
     {
         DrawerAnimator(m_animator);
-        ChangeMat(isDetected);
     }
 
     private void DrawerAnimator(Animator animator)
@@ -32,6 +31,9 @@ public class DeskDrawerController : MonoBehaviour, IInteractable
         isOpen = !isOpen;
         animator.SetBool("IsOpen", isOpen);
     }
+
+    // 아웃라인 셰이더 관련 오류로 우선 주석 처리 (에셋상의 오류로 추정)
+    /*
     private void ChangeMat(bool isDetected)
     {
         if(isDetected)
@@ -55,4 +57,5 @@ public class DeskDrawerController : MonoBehaviour, IInteractable
         isDetected = false;
         return false;
     }
+    */
 }

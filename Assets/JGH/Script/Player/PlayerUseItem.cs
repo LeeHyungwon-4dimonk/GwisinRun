@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerUseItem : MonoBehaviour
@@ -33,7 +34,7 @@ public class PlayerUseItem : MonoBehaviour
         
         switch (itemName)
         {
-            case "SpeedPotion":
+            case "StaminaPotion":
                 PlayerHealth.CurrentStamina += value;
 
                 if (PlayerHealth.CurrentStamina < 0)
@@ -59,10 +60,36 @@ public class PlayerUseItem : MonoBehaviour
                     PlayerHealth.CurrentHealth = PlayerHealth.MaxHealth;
                 }
                 break;
-                
+            
+            case "SpeedPotion":
+                StartCoroutine(ItemSpeed(value));
+                break;
             default: 
                 
                 break;
+        }
+    }
+
+    IEnumerator ItemSpeed(float value)
+    {
+        PlayerMove.ItemSpeed = value;
+        WaitForSeconds time = new WaitForSeconds(0.1f);
+
+        if (value > 0)
+        {
+            while (PlayerMove.ItemSpeed > 0f)
+            {
+                yield return time;
+                PlayerMove.ItemSpeed -= 0.1f;
+            }
+        }
+        else if (value < 0)
+        {
+            while (PlayerMove.ItemSpeed < 0f)
+            {
+                yield return time;
+                PlayerMove.ItemSpeed += 0.1f;
+            }
         }
     }
 }

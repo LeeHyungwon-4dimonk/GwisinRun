@@ -65,7 +65,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             CurrentStamina = 0;
 
             // 완전히 탈진하면 강제로 걷기 속도로 고정
-            PlayerMove.m_speed = PlayerMove.m_walkSpeed;
+            PlayerMove.Speed = PlayerMove.WalkSpeed;
             return;
         }
 
@@ -80,10 +80,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
             // 걷기 속도와 달리기 속도 사이를 보간
             // t가 1이면 runSpeed, t가 0이면 walkSpeed
-            float targetSpeed = Mathf.Lerp(PlayerMove.m_walkSpeed, 10f, t); // 10f는 달리기 속도
+            float targetSpeed = Mathf.Lerp(PlayerMove.WalkSpeed, 10f, t); // 10f는 달리기 속도
 
             // 보간된 속도를 적용
-            PlayerMove.m_speed = targetSpeed;
+            PlayerMove.Speed = targetSpeed;
         }
     }
 }
