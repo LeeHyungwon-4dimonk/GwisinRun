@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public AudioSetting Audio;
     public GraphicsSetting Graphics;
     public Inventory Inventory;
+    public ChangeSceneManager Scene;
     //todo 추후 리팩토링 시 검토
     // public UIManager UI;
 
@@ -115,6 +116,7 @@ public class GameManager : MonoBehaviour
     public void GameClear(string sceneName)
     {
         m_isCleared = true;
+        
         if (m_currentTime < m_bestTime)
         {
             m_bestTime = m_currentTime;
@@ -122,11 +124,13 @@ public class GameManager : MonoBehaviour
             //# Write
             PlayerPrefs.SetFloat(sceneName, m_bestTime);
         }
+        
+        m_bestTime = PlayerPrefs.GetFloat(sceneName);
     }
     
-    public void SceneLoader(string sceneName)
+    public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        Scene.SceneLoader(sceneName);
         GameStart(sceneName);
     }
 

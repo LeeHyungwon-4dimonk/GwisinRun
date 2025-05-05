@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6077604769833955961}
   - component: {fileID: 7271208368190346492}
   - component: {fileID: 7639148258068196382}
-  - component: {fileID: 4922811052473223251}
   m_Layer: 0
   m_Name: HeartPotion
   m_TagString: Item
@@ -30,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 207711635115789932}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.8656074, y: 1.2074203, z: 4.391682}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -153,27 +152,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_type: 1
   m_itemName: 
+  m_itemSprite: {fileID: 21300000, guid: 386480a3c50919f49ad40b844b9c64b5, type: 3}
   m_value: 10
   m_isPositive: 0
---- !u!114 &4922811052473223251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 207711635115789932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92258fa66c89fe9449f6737825014ee4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_canvasRectTransfom: {fileID: 0}
-  m_panel: {fileID: 0}
-  m_popupText: {fileID: 0}
-  m_detectRadius: 2
-  m_playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1 &1754833972925014330
 GameObject:
   m_ObjectHideFlags: 0

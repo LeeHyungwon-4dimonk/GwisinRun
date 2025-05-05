@@ -75,15 +75,9 @@ public class TestPlayerContoller : MonoBehaviour
         }
         
         //# Items
-        for (int i = 0; i < GameManager.Instance.Input.ItemKeyPressed.Length; i++)
+        if (GameManager.Instance.Input.ItemsActionPressed)
         {
-            if (GameManager.Instance.Input.ItemKeyPressed[i])
-            {
-                Debug.Log($"{i+1} 아이템 키");
-                //# 현재 방법을 찾지 못해 읽은 후 수동으로 clear 해야 합니다.
-                //# 추후 리팩토링 예정
-                GameManager.Instance.Input.ItemKeyPressed[i] = false;
-            }
+            Debug.Log($"{GameManager.Instance.Input.LastPressedKey + 1} 번째 슬롯 선택");
         }
         
         //# Pause

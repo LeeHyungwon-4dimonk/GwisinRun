@@ -23,8 +23,13 @@ public class FieldOfViewSystem : MonoBehaviour
     [SerializeField] private float m_ViewAngle = 90f;
     [SerializeField] private LayerMask m_TargetMask;
     [SerializeField] private LayerMask m_ObstacleMask;
-
     
+    // (250502) 데미지 변수 추가 :: S
+    [Header("MonsterAbility")]
+    public int MonsterPower = 20;
+    // (250502) 데미지 변수 추가 :: E
+
+
     private void Start()
     {
         StartCoroutine(DetectionLoop());

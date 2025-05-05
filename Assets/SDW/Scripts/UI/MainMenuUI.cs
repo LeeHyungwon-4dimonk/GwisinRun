@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,19 @@ public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private Button m_exitButton;
 
-    
-    void Start()
+    private void Start()
     {
         m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
-        // Debug.LogError("temp");
+        Cursor.lockState = CursorLockMode.None;
+        
+        if (GameManager.Instance.Graphics.IsFirstTime)
+        {
+            GameManager.Instance.Graphics.SetBrightness(1f);
+        }
+    }
+
+    private void OnDisable()
+    {
+        m_exitButton.onClick.RemoveAllListeners();
     }
 }

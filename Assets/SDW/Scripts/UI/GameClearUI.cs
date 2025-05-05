@@ -32,6 +32,7 @@ public class GameClearUI : MonoBehaviour
     
     private void OnEnable()
     {
+        Cursor.lockState = CursorLockMode.None;
         GameManager.Instance.GameClear(m_levelSceneName);
             
         m_titleBackground.gameObject.SetActive(false);
@@ -39,15 +40,15 @@ public class GameClearUI : MonoBehaviour
         m_currentTimeContainer.SetActive(false);
         
         //todo 클리어 시간과 최단 시간이 같을 때(갱신) New 표시 여부 검토
-        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_titleSceneName));
+        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_titleSceneName));
         
         //# 재시작 시 GameStart 메서드를 호출하여 초기화
         m_restartButton.onClick.AddListener(() => GameManager.Instance.GameStart(m_levelSceneName));
-        m_restartButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_levelSceneName));
+        m_restartButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_levelSceneName));
         
         //# 다음 레벨로 넘어갈 시 GameStart 메서드를 호출하여 초기화
         m_nextLevelButton.onClick.AddListener(() => GameManager.Instance.GameStart(m_nextSceneName));
-        m_nextLevelButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_nextSceneName));
+        m_nextLevelButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_nextSceneName));
 
         //# clear 시점의 CurrentTime이 클리어 시간
         m_clearTime.text = $"{GameManager.Instance.CurrentTime,6:F1}";

@@ -1,22 +1,68 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerUseItem : MonoBehaviour
 {
 
+    private PlayerController m_playerController;
+    private void Start()
+    {
+        GameManager.Instance.Inventory.OnUseItem.AddListener(UseItem);
+    }
+
     void Update()
     {
-        for (int i = 0; i < GameManager.Instance.Input.ItemKeyPressed.Length; i++)
+        //# 수정 사항(20250502) -- 시작
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+            return;
+        //# 수정 사항(20250502) -- 끝
+        
+        //# 수정 사항(20250503) -- 시작
+        if(GameManager.Instance.Input.UseItemKeyPressed)
         {
-            if (GameManager.Instance.Input.ItemKeyPressed[i])
-            {
-                GameManager.Instance.Inventory.UseItem(i);
-                //# 현재 방법을 찾지 못해 읽은 후 수동으로 clear 해야 합니다.
-                //# 추후 리팩토링 예정
-                GameManager.Instance.Input.ItemKeyPressed[i] = false;
-            }
+            GameManager.Instance.Inventory.UseItem();
         }
+        //# 수정 사항(20250503) -- 끝
     }
     
+    public void UseItem(string itemName, int value)
+    {
+        //# 수정 사항(20250502) -- 시작
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+            return;
+        //# 수정 사항(20250502) -- 끝
+        
+        switch (itemName)
+        {
+            case "SpeedPotion":
+                PlayerHealth.CurrentStamina += value;
+
+                if (PlayerHealth.CurrentStamina < 0)
+                {
+                    PlayerHealth.CurrentStamina = 0;
+                }
+                else if (PlayerHealth.CurrentStamina > PlayerHealth.MaxStamina)
+                {
+                    PlayerHealth.CurrentStamina = PlayerHealth.MaxStamina;
+                }
+                break;
+            
+            case "HeartPotion":
+                PlayerHealth.CurrentHealth += value;
+
+                if (PlayerHealth.CurrentHealth < 0)
+                {
+                    PlayerHealth.CurrentHealth = 0;
+                    PlayerController.Die();
+                }
+                else if (PlayerHealth.CurrentHealth > PlayerHealth.MaxHealth)
+                {
+                    PlayerHealth.CurrentHealth = PlayerHealth.MaxHealth;
+                }
+                break;
+                
+            default: 
+                
+                break;
+        }
+    }
 }

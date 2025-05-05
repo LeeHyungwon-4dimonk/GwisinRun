@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Dynamic;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum MonsterState
@@ -12,12 +13,15 @@ public enum MonsterState
     Attack
 }
 
+
 public class MonsterPatrolState : FsmState<MonsterState>
 {
     private Monster monster;
 
     private int currentEnemyPosition;
     float walkingPointRadius = 3; // 순찰 지점 도달 판정에 사용되는 반경
+
+    
     public MonsterPatrolState(Monster monster) : base(MonsterState.Patrol)
     {
         this.monster = monster;
@@ -163,11 +167,14 @@ public class MonsterChaseState : FsmState<MonsterState>
 
 public class MonsterAttackState : FsmState<MonsterState>
 {
+    
     private Monster monster;
+    
     public MonsterAttackState(Monster monster) : base(MonsterState.Attack)
     {
         this.monster = monster;
     }
+    
     public override void OnEnter(MonsterState fromState, FsmMessage msg)
     {
         // 공격 시작 시 몬스터의 공격 중 상태 설정
@@ -178,7 +185,7 @@ public class MonsterAttackState : FsmState<MonsterState>
         
         monster.StartCustomCoroutine(Attack());
     }
-
+    
 
     public override void OnExit(MonsterState toState)
     {
@@ -195,6 +202,19 @@ public class MonsterAttackState : FsmState<MonsterState>
         Debug.Log("공격 시작");
         
         // 공격 애니메이션이나 효과를 여기에 추가
+        monster.animator.SetTrigger("IsAttacking");
+        // (250502) 데미지 처리 추가 :: S
+        if (monster.fieldOfViewSystem.currentTarget != null)
+        {
+            IDamageable damageable = monster.fieldOfViewSystem.currentTarget.root.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                // 250503 EDIT :: S
+                damageable.TakeDamage(monster.fieldOfViewSystem.MonsterPower); // 원하는 데미지 값
+                // 250503 EDIT :: E
+            }
+        } 
+        // (250502) 데미지 처리 추가 :: E
         
         yield return new WaitForSeconds(3f);
         

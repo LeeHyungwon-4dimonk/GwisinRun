@@ -1,70 +1,134 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Inventory : MonoBehaviour
 {
     public int maxSlots = 6;
-    public List<Item> items = new List<Item>();
+    public Item[] items;
+    private int m_itemCount;
+    
+    
     public UnityEvent<string, int> OnUseItem;
+    public UnityEvent<int> OnDropOrUseItem;
+    public UnityEvent<int, Item> OnAddItem;
+    public UnityEvent<int> OnSelectedItemChanged;
+    
+    //# ???? ?¨Ì??(20250503) -- ????
+    private int m_selectedItemIndex;
+    public int SelectedItemIndex => m_selectedItemIndex;
+    
+    // 250503 Ï∂?Í∞? :: S
+    public int GetSelectedIndex() => m_selectedItemIndex;
+    public Item GetItemAt(int index) => items[index];
+    public void ClearItemAt(int index)
+    {
+        items[index] = null;
+        m_itemCount--;
+        OnDropOrUseItem?.Invoke(index);
+    }
+    // 250503 Ï∂?Í∞? :: E
+
+    private void Awake()
+    {
+        items = new Item[maxSlots];
+    }
 
     void Update()
     {
-        // for (int i = 0; i < 6; i++)
-        // {
-        //     if (Input.GetKeyDown(KeyCode.Alpha1 + i))
-        //     {
-        //         Debug.Log($"{i + 1}π¯ ΩΩ∑‘ æ∆¿Ã≈€ ªÁøÎ Ω√µµ");
-        //         UseItem(i);
-        //     }
-        // }
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+            return;
+        
+        if (GameManager.Instance.Input.ItemsActionPressed)
+        {
+            m_selectedItemIndex = GameManager.Instance.Input.LastPressedKey;
+            // Debug.Log($"{m_selectedItemIndex+ 1} Î≤?Ïß? ?¨Î°Ø ????");
+            OnSelectedItemChanged?.Invoke(m_selectedItemIndex);
+        }
     }
+    //# ???? ?¨Ì??(20250503) -- ??
 
     public bool AddItem(Item item)
     {
-        if (items.Count >= maxSlots)
+        if (m_itemCount >= maxSlots)
         {
-            Debug.Log("¿Œ∫•≈‰∏Æ∞° ∞°µÊ √°Ω¿¥œ¥Ÿ.");
+            Debug.Log("?∏Î≤§??Î¶¨Í? Í∞??? Ï∞ºÏ?µÎ????.");
             return false;
         }
 
-        items.Add(item);
-        item.gameObject.SetActive(false);
-        Debug.Log($"{item.ItemName} æ∆¿Ã≈€¿ª »πµÊ«ﬂΩ¿¥œ¥Ÿ.");
-        UpdateInventoryUI();
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] != null)
+                continue;
+            
+            items[i] = item;
+            item.gameObject.SetActive(false);
+            OnAddItem?.Invoke(i, items[i]);
+            m_itemCount++;
+            break;
+        }
+        
         return true;
     }
 
-    void UpdateInventoryUI() // ø©±‚º≠ UI ±∏«ˆ
+    //# ???? ?¨Ì??(20250503) -- ????
+    public void UseItem()
     {
-        if (items.Count == 0)
+        if (m_selectedItemIndex < 0 || m_selectedItemIndex >= items.Length)
             return;
-        
-        Debug.Log($"¿Œ∫•≈‰∏Æ ªÛ≈¬: {string.Join(", ", items)}");
-    }
 
-    public void UseItem(int slotIndex)
-    {
-        if (slotIndex < 0 || slotIndex >= items.Count)
+        if (items[m_selectedItemIndex] is IUsable)
         {
-            Debug.Log("«ÿ¥Á ΩΩ∑‘ø° æ∆¿Ã≈€¿Ã æ¯Ω¿¥œ¥Ÿ.");
-            return;
-        }
-
-        if (items[slotIndex] is IUsable)
-        {
-            UsableItem item = items[slotIndex] as UsableItem;
+            UsableItem item = items[m_selectedItemIndex] as UsableItem;
             if (item == null)
                 return;
             
             OnUseItem?.Invoke(item.ItemName, item.Value); 
-            items.RemoveAt(slotIndex);
+            OnDropOrUseItem?.Invoke(m_selectedItemIndex);
+            
+            items[m_selectedItemIndex] = null;
             item.Use();
-            UpdateInventoryUI();
+            m_itemCount--;
         }
-
     }
+
+    public bool RemoveKey()
+    {
+        for(int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == null)
+                continue;
+            
+            if (items[i].ItemName == "Key")
+            {
+                OnDropOrUseItem?.Invoke(i);
+                Destroy(items[i].gameObject);
+                items[i] = null;
+                m_itemCount--;
+                return true;
+            }
+        }
+        return false;
+    }
+    public void DropItem(Vector3 startPosition, Vector3 direction, float force)
+    {
+        if (items[m_selectedItemIndex] == null)
+            return;
+
+        Item item = items[m_selectedItemIndex];
+        if (item == null)
+            return;
+        
+        item.gameObject.SetActive(true);
+        item.ThrowItem(startPosition, direction, force);
+        OnDropOrUseItem?.Invoke(m_selectedItemIndex);
+        
+        items[m_selectedItemIndex] = null;
+        
+        m_itemCount--;
+        Debug.Log($"{m_selectedItemIndex + 1} ΩΩ∑‘ø° æ∆¿Ã≈€¿ª πˆ∏≥¥œ¥Ÿ.");
+    }
+    //# ºˆ¡§ ªÁ«◊(20250503) -- ≥°
 }

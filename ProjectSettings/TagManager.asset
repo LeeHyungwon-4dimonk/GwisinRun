@@ -9,6 +9,7 @@ TagManager:
   - Walkable
   - Item
   - InteractableObject
+  - Monster
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Targets
   - 
   - Postprocessing
-  - 
+  - UIPostprocessing
   - 
   - 
   - 

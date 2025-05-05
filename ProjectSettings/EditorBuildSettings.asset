@@ -20,5 +20,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SDW/Scenes/[Merge] LevelOneScene(GetItem, ItemUI, InteractableObject).unity
     guid: 89dc62a8c55eeb04caa04827643dd57a
+  - enabled: 1
+    path: Assets/SDW/Scenes/[Merge] LevelOneScene(Monster).unity
+    guid: 4053823aa8b19364aa4310b4b99ce88f
+  - enabled: 1
+    path: Assets/SDW/Scenes/[Merge] LevelOneScene(UITest).unity
+    guid: c20e3dca84bef994dafb910545103c53
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 4398f008affba3e469ccaa77a7b02b68, type: 3}

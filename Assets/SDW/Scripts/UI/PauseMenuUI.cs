@@ -28,6 +28,8 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private GameObject m_soundsSettingDialog;
     [SerializeField] private GameObject m_graphicsSettingDialog;
     [SerializeField] private GameObject m_controlsSettingDialog;
+    [SerializeField] private GameObject m_inventoryContainer;
+    [SerializeField] private GameObject m_itemContainer;
     
     private void OnEnable()
     {
@@ -38,9 +40,11 @@ public class PauseMenuUI : MonoBehaviour
         m_titleBackground.gameObject.SetActive(true);
         m_blackBackground.gameObject.SetActive(true);
         m_currentTimeContainer.SetActive(false);
+        m_inventoryContainer.SetActive(false);
+        m_itemContainer.SetActive(false);
         
         m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
-        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_sceneName));
+        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_sceneName));
     }
 
     public void Close()
@@ -56,6 +60,8 @@ public class PauseMenuUI : MonoBehaviour
         m_titleBackground.gameObject.SetActive(false);
         m_blackBackground.gameObject.SetActive(false);
         m_currentTimeContainer.SetActive(true);
+        m_inventoryContainer.SetActive(true);
+        m_itemContainer.SetActive(true);
         
         m_inputSetting.LoadBinding();
         

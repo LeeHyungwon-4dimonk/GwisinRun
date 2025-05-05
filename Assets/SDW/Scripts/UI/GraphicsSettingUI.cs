@@ -58,7 +58,7 @@ public class GraphicsSettingUI : MonoBehaviour
     {
         GraphicsModel currentSetting = GameManager.Instance.Graphics.CurrentSetting;
         m_brightnessSlider.value = currentSetting.Brightness;
-        m_brightnessTextValue.text = (currentSetting.Brightness * 20).ToString("0");
+        m_brightnessTextValue.text = (currentSetting.Brightness * 100).ToString("0");
 
         m_qualityDropdown.value = currentSetting.Quality;
 
@@ -78,7 +78,7 @@ public class GraphicsSettingUI : MonoBehaviour
 
     private void GraphicsDialogSetBrightness(float brightness)
     {
-        m_brightnessTextValue.text = (brightness * 20).ToString("0");
+        m_brightnessTextValue.text = (brightness * 100).ToString("0");
     }
     
 

@@ -4,8 +4,8 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 public class Monster : MonoBehaviour
 {
-
-
+    
+    public Animator animator;
     [Header ("MonsterPatrolState")]
     public GameObject[] walkPoints;             // 순찰할 위치들을 담은 배열
 
@@ -25,6 +25,8 @@ public class Monster : MonoBehaviour
     private Coroutine           customCoroutine;
     private void Awake()
     {
+        animator = GetComponent<Animator>();
+
         FSM = new StateMachine<MonsterState>();
         FSM.AddState(new MonsterPatrolState(this));
         FSM.AddState(new MonsterChaseState(this));
@@ -33,6 +35,18 @@ public class Monster : MonoBehaviour
         FSM.ChangeState(MonsterState.Patrol);
         // 이벤트 구독
         RegisterEvents();
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+        {
+            navMesh.isStopped = true;
+        }
+        else
+        {
+            navMesh.isStopped = false;
+        }
     }
 
     private void RegisterEvents()

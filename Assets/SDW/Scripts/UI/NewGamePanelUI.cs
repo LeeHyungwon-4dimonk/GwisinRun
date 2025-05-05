@@ -12,7 +12,7 @@ public class NewGamePanelUI : MonoBehaviour
     
     void Start()
     {
-        m_newGameYesButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_sceneName));
+        m_newGameYesButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_sceneName));
     }
 
 }

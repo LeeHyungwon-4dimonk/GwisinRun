@@ -4075,7 +4075,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1789526401842862718, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: Shift
+      value: Space
       objectReference: {fileID: 0}
     - target: {fileID: 1789526401842862718, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontColor32.rgba
@@ -4199,7 +4199,7 @@ PrefabInstance:
       objectReference: {fileID: 448759186}
     - target: {fileID: 7475706035956685784, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: Run
+      value: Jump
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12209,6 +12209,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_V2_Edit
       objectReference: {fileID: 0}
+    - target: {fileID: 5898414512436737983, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6503623160378578449, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_pausedMenu
       value: 
@@ -12219,15 +12223,15 @@ PrefabInstance:
       objectReference: {fileID: 44932010}
     - target: {fileID: 6821452782703107798, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.6160706
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6821452782703107798, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.209
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6821452782703107798, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.847075
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6821452782703107798, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_LocalRotation.w

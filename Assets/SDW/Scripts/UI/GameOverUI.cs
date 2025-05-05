@@ -25,16 +25,17 @@ public class GameOverUI : MonoBehaviour
     
     private void OnEnable()
     {
+        Cursor.lockState = CursorLockMode.None;
         GameManager.Instance.GameOver();
         
         m_titleBackground.gameObject.SetActive(false);
         m_blackBackground.gameObject.SetActive(false);
         m_currentTimeContainer.SetActive(false);
         
-        m_restartButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_levelSceneName));
+        m_restartButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_levelSceneName));
         m_restartButton.onClick.AddListener(() => GameManager.Instance.GameStart(m_levelSceneName));
         
-        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.SceneLoader(m_titleSceneName));
+        m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_titleSceneName));
         
         m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
     }
@@ -46,5 +47,10 @@ public class GameOverUI : MonoBehaviour
         m_exitButton.onClick.RemoveAllListeners();
         
         m_currentTimeContainer.SetActive(true);
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        GameManager.Instance.ChangeScene(sceneName);
     }
 }

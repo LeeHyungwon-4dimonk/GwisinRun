@@ -4159,7 +4159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1115059818}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: InProgress(DoNotEdit)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17028,6 +17028,11 @@ MonoBehaviour:
   m_titleBackground: {fileID: 2071429698459364645}
   m_blackBackground: {fileID: 290176329039595657}
   m_currentTimeContainer: {fileID: 891850782}
+  m_inputSetting: {fileID: 0}
+  m_settingsMenu: {fileID: 0}
+  m_soundsSettingDialog: {fileID: 0}
+  m_graphicsSettingDialog: {fileID: 0}
+  m_controlsSettingDialog: {fileID: 0}
 --- !u!224 &8220315370830078177
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18120,5 +18125,5 @@ SceneRoots:
   - {fileID: 3899607426318026470}
   - {fileID: 199411592579128738}
   - {fileID: 1673753675461692703}
-  - {fileID: 1115059818}
   - {fileID: 729261406}
+  - {fileID: 1115059818}

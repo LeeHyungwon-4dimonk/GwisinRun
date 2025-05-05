@@ -1,45 +1,94 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerIneration : MonoBehaviour
 {
     [Header("RayCast Distance")]
-    [SerializeField] private float m_raycastDistance;
+    private float m_raycastDistance = 1.8f;
+
+    [FormerlySerializedAs("m_dropPosition")]
+    [Header("Drop Position")]
+    [SerializeField] private Transform m_dropTransform;
+    [SerializeField] private float m_dropForce = 5f;
     
     private Coroutine m_interactionCoroutine;
     private GameObject m_detectedObject;
+    
+    //# 수정 사항(20250503) -- 시작
+    [SerializeField] GameObject m_panel;
+    [SerializeField] private TMP_Text m_popupText;
+    //# 수정 사항(20250503) -- 끝
 
     
     void Update()
     {
-        if (GameManager.Instance.Input.InteractionKeyPressed)
+        //# 수정 사항(20250502) -- 시작
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsCleared || GameManager.Instance.IsGameOver)
+            return;
+        //# 수정 사항(20250502) -- 끝
+        
+        //# 수정 사항(20250503) -- 시작
+        DetectInteractableObjectByRay();
+        
+        DisplayInteractableObjectUI();
+        
+        if (m_detectedObject != null && GameManager.Instance.Input.InteractionKeyPressed)
         {
-            DetectInteractableObjectByRay();
-            InteractWithInteractableObject();
+            InteractWithObject();
         }
 
         if (GameManager.Instance.Input.DropKeyPressed)
         {
             DropItem();
         }
+        //# 수정 사항(20250503) -- 끝
     }
+    
+    //# 수정 사항(20250503) -- 시작
+    private void DisplayInteractableObjectUI()
+    {
+        if (m_detectedObject == null)
+        {
+            m_panel.SetActive(false);
+            return;
+        }
+        
+        var interactionKey = PlayerPrefs.GetString("Interaction");
+        if (m_detectedObject.CompareTag("Item"))
+        {
+            m_popupText.text = $"아이템을 얻으려면 [{interactionKey}]를 누르세요.";
+            m_panel.SetActive(true);
+        }
+
+        else if (m_detectedObject.CompareTag("InteractableObject"))
+        {
+            m_popupText.text = $"상호작용을 하려면 [{interactionKey}]를 누르세요.";
+            m_panel.SetActive(true);
+        }
+        
+    }
+
+    void InteractWithObject()
+    {
+        IInteractable interactableObject = m_detectedObject.gameObject.GetComponent<IInteractable>();
+
+        if (interactableObject == null)
+            return;
+        
+        if (m_interactionCoroutine == null)
+        {
+            interactableObject.Interact();
+            m_interactionCoroutine = StartCoroutine(InteractionDelay());
+        }
+    }
+    //# 수정 사항(20250503) -- 끝
 
     void DetectInteractableObjectByRay()
     {
-        //todo Player가 Raycast 쏨 (InteractWithInteractableObject)
-        //todo 문 등인지, 아이템인지 구분하여 처리가 필요함
-        //todo 아이템일 경우
-        //     ㄴ 마우스(화면 중앙)가 아이템으로 향하면 지정된 거리 이내면 아이템 정보가 팝업
-        //     ㄴ 지정된 거리 이내에서 E(상호작용키)를 누르면 아이템을 먹어야 함
-        //     ㄴ 인벤토리에 아이템 추가
-        //     ㄴ 인벤토리에서 아이템 사용
-        //     ㄴ 아이템 버리기
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        Debug.DrawRay(ray.origin, ray.direction * m_raycastDistance, Color.red, 0.1f);
-
+        // Debug.DrawRay(ray.origin, ray.direction * m_raycastDistance, Color.red, 0.1f);
         if (Physics.Raycast(ray, out RaycastHit hitInfo))
         {
             if (hitInfo.distance > m_raycastDistance)
@@ -52,47 +101,11 @@ public class PlayerIneration : MonoBehaviour
         }
     }
 
-    // public bool StoreItem(GameObject item)
-    // {
-    // }
-
-    public void DropItem()
+    private void DropItem()
     {
-        // if (m_equippedItem == null || m_equippedSlotIndex == -1)
-        // {
-        //     Debug.Log("버릴 아이템 없음");
-        //     return;
-        // }
-        //
-        // GameObject dropped = Instantiate(m_itemSlots[m_equippedSlotIndex].ItemObject);
-        // dropped.SetActive(true);
-        // dropped.transform.position = transform.position + transform.right * 1f;
-        //
-        // Rigidbody rb = dropped.GetComponent<Rigidbody>();
-        // if (rb != null)
-        // {
-        //     rb.isKinematic = false;
-        //     rb.useGravity = true;
-        // }
-        //
-        // Debug.Log($"{dropped.name} 버림");
-        // m_itemSlots[m_equippedSlotIndex] = new ItemInfo.ItemSlotData();
-    }
-
-    private void InteractWithInteractableObject()
-    {
-        if (m_detectedObject == null)
-            return;
+        Debug.Log($"Forward : {transform.forward}");
+        GameManager.Instance.Inventory.DropItem(m_dropTransform.position, transform.forward, m_dropForce);
         
-        if (m_detectedObject.CompareTag("InteractableObject") || m_detectedObject.CompareTag("Item"))
-        {
-            IInteractable interactableObject = m_detectedObject.gameObject.GetComponent<IInteractable>();
-            if (m_interactionCoroutine == null)
-            {
-                interactableObject.Interact();
-                m_interactionCoroutine = StartCoroutine(InteractionDelay());
-            }
-        }
     }
     
     IEnumerator InteractionDelay()
@@ -100,4 +113,5 @@ public class PlayerIneration : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         m_interactionCoroutine = null;
     }
+
 }
