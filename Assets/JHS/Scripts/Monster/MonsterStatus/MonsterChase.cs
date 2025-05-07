@@ -23,7 +23,7 @@ public class MonsterChase : IMonsterState
                 float distanceToTarget = Vector3.Distance(monster.transform.position, target.position);
                 if (distanceToTarget <= monster.attackRange && monster.CanAttack() && !monster.IsAttacking)
                 {
-                    Debug.Log("ChaseRoutine detected attack range - changing to Attack state");
+                    // Debug.Log("ChaseRoutine detected attack range - changing to Attack state");
                     monster.ChangeState(monster.GetAttackState()); 
                     // monster.GetCurrentState = "Attack";
                     yield break;
@@ -41,7 +41,7 @@ public class MonsterChase : IMonsterState
 
     public void OnEnter()
     {
-        Debug.Log(">> Chase 상태 진입");
+        // Debug.Log(">> Chase 상태 진입");
         
         // 빠른 이동 속도 적용
         monster.navMesh.speed = 7.0f;

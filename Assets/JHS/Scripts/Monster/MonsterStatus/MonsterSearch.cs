@@ -19,11 +19,11 @@ public class MonsterSearch : IMonsterState
         
         while (true)
         {
-            Debug.Log(m_searchCount);
+            // Debug.Log(m_searchCount);
             Transform target = monster.FindVisibleTarget();
             if(target != null)
             {
-                Debug.Log("MonsterSearchState Chase 상태로 변경");
+                // Debug.Log("MonsterSearchState Chase 상태로 변경");
                 monster.ChangeState(monster.GetChaseState());
                 yield break;
             }
@@ -31,10 +31,10 @@ public class MonsterSearch : IMonsterState
             {
                 monster.MoveToRandomSearchPoint();
                 ++m_searchCount;
-                Debug.Log($"Search Count: {m_searchCount}/{monster.searchMoveCount}");
+                // Debug.Log($"Search Count: {m_searchCount}/{monster.searchMoveCount}");
                 if(m_searchCount > monster.searchMoveCount)
                 {
-                    Debug.Log("MonsterSearchState Patrol 상태로 변경");
+                    // Debug.Log("MonsterSearchState Patrol 상태로 변경");
                     monster.ChangeState(monster.GetPatrolState());
                     yield break; // 코루틴 명시적 종료
                 }
@@ -46,7 +46,7 @@ public class MonsterSearch : IMonsterState
 
     public void OnEnter()
     {
-        Debug.Log(">> Search 상태 진입");
+        // Debug.Log(">> Search 상태 진입");
         m_searchCount = 0;
         
         monster.SetAttacking(false); 
@@ -62,12 +62,12 @@ public class MonsterSearch : IMonsterState
         
         monster.StartCustomCoroutine(SearchRoutine());
         
-        Debug.Log("MonsterSearchState 실행됨 초기화됨됨" + m_searchCount);
+        // Debug.Log("MonsterSearchState 실행됨 초기화됨됨" + m_searchCount);
     }
 
     public void OnExit()
     {
-        Debug.Log("MonsterSearchState 종료됨");
+        // Debug.Log("MonsterSearchState 종료됨");
         monster.StopCustomCoroutine();
     }
 

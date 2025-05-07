@@ -1571,6 +1571,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
+      propertyPath: m_TargetMask.m_Bits
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
+      propertyPath: m_ObstacleMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: walkPoints.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -6225,6 +6233,14 @@ PrefabInstance:
       objectReference: {fileID: 2054905898}
     - target: {fileID: 1542063872582151333, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
       propertyPath: m_popupText
+      value: 
+      objectReference: {fileID: 2054905897}
+    - target: {fileID: 1542063872582151333, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
+      propertyPath: m_ineractionPanel
+      value: 
+      objectReference: {fileID: 2054905898}
+    - target: {fileID: 1542063872582151333, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}
+      propertyPath: m_interactionPopupText
       value: 
       objectReference: {fileID: 2054905897}
     - target: {fileID: 5898414512436737983, guid: cd39ae8f65020e641bebdd57d85591bb, type: 3}

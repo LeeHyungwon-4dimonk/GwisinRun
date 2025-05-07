@@ -127,13 +127,13 @@ public class Monster : MonoBehaviour
                 {
                     if (currentState != GetChaseState() && currentState != GetAttackState())
                     {
-                        Debug.Log("[시야차단] 앉아서 숨은 상태 → Patrol/Search 인식 불가");
+                        // Debug.Log("[시야차단] 앉아서 숨은 상태 → Patrol/Search 인식 불가");
                         continue;
                     }
                 }
             }
 
-            Debug.Log("🎯 플레이어 인식 성공");
+            // Debug.Log("🎯 플레이어 인식 성공");
             currentTarget = target;
             return target;
         }
@@ -186,7 +186,7 @@ public class Monster : MonoBehaviour
             HandleAttackDistance(); // 또는 거리 체크 등
         }
         
-        Debug.Log($"[UPDATE] IsPaused={GameManager.Instance.IsPaused}, IsCleared={GameManager.Instance.IsCleared}, IsGameOver={GameManager.Instance.IsGameOver}");
+        // Debug.Log($"[UPDATE] IsPaused={GameManager.Instance.IsPaused}, IsCleared={GameManager.Instance.IsCleared}, IsGameOver={GameManager.Instance.IsGameOver}");
     }
     
     private void HandleAttackDistance()
@@ -198,7 +198,7 @@ public class Monster : MonoBehaviour
         // if (!isAttacking && CanAttack() && distance <= attackRange && GetCurrentState == "Chase")
         if (!isAttacking && CanAttack() && distance <= attackRange)
         {
-            Debug.Log("▶ 공격 상태 전환 시도");
+            // Debug.Log("▶ 공격 상태 전환 시도");
             ChangeState(m_monsterAttack);
         }
     }
@@ -233,12 +233,12 @@ public class Monster : MonoBehaviour
     public void StartAttack()
     {
         lastAttackTime = Time.time;
-        Debug.Log($"Monster attack started, next attack available at: {lastAttackTime + attackCooldown}");
+        // Debug.Log($"Monster attack started, next attack available at: {lastAttackTime + attackCooldown}");
     }
     
     public void ChangeState(IMonsterState newState)
     {
-        Debug.Log($"상태 변경: {m_currentStateInstance?.GetType().Name} → {newState.GetType().Name}");
+        // Debug.Log($"상태 변경: {m_currentStateInstance?.GetType().Name} → {newState.GetType().Name}");
 
         // 현재 상태가 공격 상태이고, 새로운 상태가 공격이 아닌 경우 전환 금지
         if (m_currentStateInstance == m_monsterAttack && isAttacking && newState != m_monsterAttack && newState != m_monsterSearch)
@@ -296,12 +296,12 @@ public class Monster : MonoBehaviour
 
         if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, searchRadius, NavMesh.AllAreas))
         {
-            Debug.Log($"[Search] 이동 위치: {hit.position}");
+            // Debug.Log($"[Search] 이동 위치: {hit.position}");
             navMesh.SetDestination(hit.position);
         }
         else
         {
-            Debug.LogWarning("[Search] 유효한 NavMesh 위치를 찾지 못했습니다.");
+            // Debug.LogWarning("[Search] 유효한 NavMesh 위치를 찾지 못했습니다.");
         }
     }
     

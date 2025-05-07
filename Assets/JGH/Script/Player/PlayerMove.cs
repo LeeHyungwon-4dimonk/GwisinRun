@@ -50,7 +50,7 @@ public class PlayerMove : MonoBehaviour
         m_playerController.PlayerTransform = transform;
         if (m_playerController.PlayerTransform == null)
         {
-            Debug.LogError("PlayerTransform이 초기화되지 않았습니다!");
+            // Debug.LogError("PlayerTransform이 초기화되지 않았습니다!");
             return;
         }
         

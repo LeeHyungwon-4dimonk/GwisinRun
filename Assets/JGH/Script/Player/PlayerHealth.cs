@@ -76,7 +76,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         string Message = CurrentHealth <= 0 ?
             $"플레이어가 {amount} 데미지를 입었습니다. 현재 체력: 0" :
             $"플레이어가 {amount} 데미지를 입었습니다. 현재 체력: {CurrentHealth}";
-        Debug.Log(Message);
+        // Debug.Log(Message);
         
         if (CurrentHealth <= 0)
         {

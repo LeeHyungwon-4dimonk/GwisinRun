@@ -45,6 +45,7 @@ public class MonsterAttack : IMonsterState
             float hitTime = clipLength * monster.AttackHitTimingRatio;
 
             GameManager.Instance.Audio.PlaySound(SoundType.GhostAttack);
+            
             // 기다렸다가 데미지 적용
             yield return new WaitForSeconds(hitTime);
 
@@ -63,7 +64,6 @@ public class MonsterAttack : IMonsterState
                 }
             }
 
-            
 
             // 애니메이션 전체 재생 길이만큼 대기
             float remainingTime = clipLength - hitTime;
@@ -89,14 +89,14 @@ public class MonsterAttack : IMonsterState
                 return clip.length;
         }
 
-        Debug.LogWarning($"Attack 애니메이션 '{clipName}' 찾을 수 없음. 기본값 사용.");
+        // Debug.LogWarning($"Attack 애니메이션 '{clipName}' 찾을 수 없음. 기본값 사용.");
         return 1f; // 기본 fallback
     }
 
 
     public void OnEnter()
     {
-        Debug.Log(">> Attact 상태 진입");
+        // Debug.Log(">> Attact 상태 진입");
         monster.SetAttacking(true);
         monster.StartAttack(); // 공격 시작 시간 기록
         
@@ -108,7 +108,7 @@ public class MonsterAttack : IMonsterState
 
     public void OnExit()
     {
-        Debug.Log("MonsterAttackState 종료");
+        // Debug.Log("MonsterAttackState 종료");
         monster.SetAttacking(false); // 중요: 공격 상태 해제
         
         monster.StopCustomCoroutine();

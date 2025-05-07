@@ -55,11 +55,11 @@ public class MonsterPatrol : IMonsterState
 
     public void OnEnter()
     {
-        Debug.Log(">> Patrol 상태 진입");
+        // Debug.Log(">> Patrol 상태 진입");
         if(monster.walkPoints.Length <= 1)
         {
             //포인트가 없으므로 추가해야합니다.
-            Debug.Log("포인트가 없으므로 추가해야합니다.");
+            // Debug.Log("포인트가 없으므로 추가해야합니다.");
         }
         
         // 빠른 이동 속도 적용
@@ -80,12 +80,12 @@ public class MonsterPatrol : IMonsterState
         var target = monster.FindVisibleTarget();
         if (target != null)
         {
-            Debug.Log("타겟 발견! Chase로 전환 시도");
+            // Debug.Log("타겟 발견! Chase로 전환 시도");
             monster.ChangeState(monster.GetChaseState());
             return;
         }
 
-        Debug.Log("타겟 없음, 계속 Patrol");
+        // Debug.Log("타겟 없음, 계속 Patrol");
     }
 
 }

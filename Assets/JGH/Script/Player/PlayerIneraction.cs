@@ -132,7 +132,7 @@ public class PlayerIneraction : MonoBehaviour
 
     private void DropItem()
     {
-        Debug.Log($"Forward : {transform.forward}");
+        // Debug.Log($"Forward : {transform.forward}");
         GameManager.Instance.Inventory.DropItem(m_dropTransform.position, transform.forward, m_dropForce);
         
     }
