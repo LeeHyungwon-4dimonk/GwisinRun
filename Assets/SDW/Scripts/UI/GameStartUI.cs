@@ -5,14 +5,19 @@ using UnityEngine.UI;
 
 public class GameStartUI : MonoBehaviour
 {
+    [Header("Main Menu")]
+    [SerializeField] private Button m_mainMenuButton;
+    [SerializeField] private string m_sceneName;
+
+    [Header("Exit")]
+    [SerializeField] private Button m_exitButton;
+    
+    [Header("UIs")]
     [SerializeField] private GameObject m_inventoryContainer;
     [SerializeField] private GameObject m_currentTimeContainer;
     [SerializeField] private GameObject m_playerStatusUI;
     [SerializeField] private GameObject m_interactionContainer;
     [SerializeField] private GameObject m_centerPoint;
-    
-    [SerializeField] private Button m_mainMenuButton;
-    [SerializeField] private string m_sceneName;
     
     private void OnEnable()
     {
@@ -24,6 +29,7 @@ public class GameStartUI : MonoBehaviour
         
         m_currentTimeContainer.SetActive(false);
         m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_sceneName));
+        m_exitButton.onClick.AddListener(GameManager.Instance.Exit);
     }
 
 
@@ -38,10 +44,7 @@ public class GameStartUI : MonoBehaviour
         m_centerPoint.SetActive(true);
         
         m_currentTimeContainer.SetActive(true);
-    }
+        m_exitButton.onClick.RemoveAllListeners();
 
-    public void LoadScene(string sceneName)
-    {
-        GameManager.Instance.ChangeScene(sceneName);
     }
 }

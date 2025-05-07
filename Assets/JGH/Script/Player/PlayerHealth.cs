@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     
     [Header("Stamina")]
-    private int MaxStamina = 100; // 최대 스태미너
+    private int MaxStamina = 50; // 최대 스태미너
     private int CurrentStamina; // 현재 스태미너
 
     public int GetMaxHealth()
@@ -103,7 +103,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             CurrentStamina++;
             m_timer = 0f;
         }
-        if (CurrentStamina >= 100) CurrentStamina = 100;
+        if (CurrentStamina >= MaxStamina) CurrentStamina = MaxStamina;
         
         return CurrentStamina;
     }
@@ -114,7 +114,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         m_timer += Time.deltaTime;
         if (m_timer >= 0.05f)
         {
-            CurrentStamina--;
+            CurrentStamina -= 2;
             m_timer = 0f;
         }
 

@@ -32,11 +32,13 @@ public class DoorController : MonoBehaviour, IInteractable
             if (m_doortrigger1.MonsterDetected() && m_isClosed)
             {
                 GameManager.Instance.Audio.PlaySound(SoundType.DoorOpen);
+                gameObject.layer = 0;
                 OpenDoorCounterClockwise();
             }
             else if (m_doortrigger2.MonsterDetected() && m_isClosed)
             {
                 GameManager.Instance.Audio.PlaySound(SoundType.DoorOpen);
+                gameObject.layer = 0;
                 OpenDoorClockwise();
             }
             else if (m_doortrigger1.MonsterDetected() || m_doortrigger2.MonsterDetected())
@@ -55,16 +57,19 @@ public class DoorController : MonoBehaviour, IInteractable
             if (m_close == true && m_doortrigger1.PlayerDetected())
             {
                 GameManager.Instance.Audio.PlaySound(SoundType.DoorOpen);
+                gameObject.layer = 0;
                 OpenDoorCounterClockwise();
             }
             else if (m_close == true && m_doortrigger2.PlayerDetected())
             {
                 GameManager.Instance.Audio.PlaySound(SoundType.DoorOpen);
+                gameObject.layer = 0;
                 OpenDoorClockwise();
             }
             else if (m_close == false)
             {
                 CloseDoor();
+                gameObject.layer = 7;
                 StartCoroutine(CloseDoorCoroutine());
             }
             else

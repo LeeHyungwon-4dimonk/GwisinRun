@@ -246,7 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1224350189155291542}
   - component: {fileID: 677709207021850286}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: DoorAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 5717637993652886181}
   - component: {fileID: 2968447188420099011}
   - component: {fileID: -5391943978034367203}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: LockedDoorPrefab
   m_TagString: InteractableObject
   m_Icon: {fileID: 0}

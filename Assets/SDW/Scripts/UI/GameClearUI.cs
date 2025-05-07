@@ -58,8 +58,15 @@ public class GameClearUI : MonoBehaviour
         m_restartButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_levelSceneName));
         
         //# 다음 레벨로 넘어갈 시 GameStart 메서드를 호출하여 초기화
-        m_nextLevelButton.onClick.AddListener(() => GameManager.Instance.GameStart(m_nextSceneName));
-        m_nextLevelButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_nextSceneName));
+        if (m_nextSceneName != m_titleSceneName)
+        {
+            m_nextLevelButton.onClick.AddListener(() => GameManager.Instance.GameStart(m_nextSceneName));
+            m_nextLevelButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_nextSceneName));
+        }
+        else
+        {
+            m_nextLevelButton.gameObject.SetActive(false);
+        }
 
         //# clear 시점의 CurrentTime이 클리어 시간
         m_clearTime.text = $"{GameManager.Instance.CurrentTime,6:F1}";
@@ -70,6 +77,7 @@ public class GameClearUI : MonoBehaviour
     {
         m_mainMenuButton.onClick.RemoveAllListeners();
         m_restartButton.onClick.RemoveAllListeners();
+        
         m_nextLevelButton.onClick.RemoveAllListeners();
 
         m_clearTime.text = "";

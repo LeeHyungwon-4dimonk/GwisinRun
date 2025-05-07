@@ -28,6 +28,7 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private GameObject m_playerStatusUI;
     [SerializeField] private GameObject m_interactionContainer;
     [SerializeField] private GameObject m_centerPoint;
+    [SerializeField] private GameObject m_pauseMenuContainer;
     
     private void OnEnable()
     {
@@ -41,6 +42,7 @@ public class GameOverUI : MonoBehaviour
         m_playerStatusUI.SetActive(false);
         m_interactionContainer.SetActive(false);
         m_centerPoint.SetActive(false);
+        m_pauseMenuContainer.SetActive(false);
         
         m_restartButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_levelSceneName));
         m_mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeScene(m_titleSceneName));

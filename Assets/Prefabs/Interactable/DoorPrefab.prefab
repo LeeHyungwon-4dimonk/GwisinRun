@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6404897469173066820}
   - component: {fileID: 8357479644160851867}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: DoorAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
