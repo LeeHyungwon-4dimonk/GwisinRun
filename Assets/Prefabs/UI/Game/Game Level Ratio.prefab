@@ -1342,6 +1342,10 @@ PrefabInstance:
       value: PauseMenu Container
       objectReference: {fileID: 0}
     - target: {fileID: 7119999242261637266, guid: 7eea454e1770bf64c894a67246826fc0, type: 3}
+      propertyPath: m_centerPoint
+      value: 
+      objectReference: {fileID: 1713666149259305977}
+    - target: {fileID: 7119999242261637266, guid: 7eea454e1770bf64c894a67246826fc0, type: 3}
       propertyPath: m_settingsMenu
       value: 
       objectReference: {fileID: 6559188008991696996}
@@ -1353,6 +1357,10 @@ PrefabInstance:
       propertyPath: m_playerStatusUI
       value: 
       objectReference: {fileID: 4255047433610054818}
+    - target: {fileID: 7119999242261637266, guid: 7eea454e1770bf64c894a67246826fc0, type: 3}
+      propertyPath: m_blackBackground
+      value: 
+      objectReference: {fileID: 7298674850615296415}
     - target: {fileID: 7119999242261637266, guid: 7eea454e1770bf64c894a67246826fc0, type: 3}
       propertyPath: m_titleBackground
       value: 
@@ -1401,6 +1409,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 4983716127370898410}
     m_Modifications:
     - target: {fileID: 842848571154942351, guid: 1995015e09fc20c4abfc6668b20a6a4b, type: 3}
+      propertyPath: m_centerPoint
+      value: 
+      objectReference: {fileID: 1713666149259305977}
+    - target: {fileID: 842848571154942351, guid: 1995015e09fc20c4abfc6668b20a6a4b, type: 3}
       propertyPath: m_levelSceneName
       value: LevelOne
       objectReference: {fileID: 0}
@@ -1408,6 +1420,10 @@ PrefabInstance:
       propertyPath: m_playerStatusUI
       value: 
       objectReference: {fileID: 4255047433610054818}
+    - target: {fileID: 842848571154942351, guid: 1995015e09fc20c4abfc6668b20a6a4b, type: 3}
+      propertyPath: m_blackBackground
+      value: 
+      objectReference: {fileID: 7298674850615296415}
     - target: {fileID: 842848571154942351, guid: 1995015e09fc20c4abfc6668b20a6a4b, type: 3}
       propertyPath: m_titleBackground
       value: 
@@ -1513,6 +1529,10 @@ PrefabInstance:
       value: TitleScene
       objectReference: {fileID: 0}
     - target: {fileID: 4104577495384819350, guid: 1995015e09fc20c4abfc6668b20a6a4b, type: 3}
+      propertyPath: m_centerPoint
+      value: 
+      objectReference: {fileID: 1713666149259305977}
+    - target: {fileID: 4104577495384819350, guid: 1995015e09fc20c4abfc6668b20a6a4b, type: 3}
       propertyPath: m_playerStatusUI
       value: 
       objectReference: {fileID: 4255047433610054818}
@@ -1564,6 +1584,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2579922176157699062}
+    - target: {fileID: 7595308556941821530, guid: 1995015e09fc20c4abfc6668b20a6a4b, type: 3}
+      propertyPath: m_centerPoint
+      value: 
+      objectReference: {fileID: 1713666149259305977}
     - target: {fileID: 7595308556941821530, guid: 1995015e09fc20c4abfc6668b20a6a4b, type: 3}
       propertyPath: m_levelSceneName
       value: LevelOne

@@ -4375,7 +4375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_ViewAngle
-      value: 120
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_ViewRadius
@@ -4799,7 +4799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_ViewAngle
-      value: 120
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 687743150344426901, guid: 89158c812f07b2c4097aef89754bea7a, type: 3}
       propertyPath: m_ViewRadius

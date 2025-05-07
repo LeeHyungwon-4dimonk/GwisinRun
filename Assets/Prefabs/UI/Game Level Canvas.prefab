@@ -191,6 +191,10 @@ PrefabInstance:
       value: Game Level Ratio
       objectReference: {fileID: 0}
     - target: {fileID: 3172566906378675616, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
+      propertyPath: m_centerPoint
+      value: 
+      objectReference: {fileID: 1786294224235047604}
+    - target: {fileID: 3172566906378675616, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
       propertyPath: m_blackBackground
       value: 
       objectReference: {fileID: 1681374933697982832}
@@ -279,6 +283,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1681374933697982832}
     - target: {fileID: 9054106600794582206, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
+      propertyPath: m_centerPoint
+      value: 
+      objectReference: {fileID: 1786294224235047604}
+    - target: {fileID: 9054106600794582206, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
       propertyPath: m_blackBackground
       value: 
       objectReference: {fileID: 1681374933697982832}
@@ -287,6 +295,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
+--- !u!1 &1786294224235047604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1713666149259305977, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
+  m_PrefabInstance: {fileID: 1081457000219068749}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5344554502172779175 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4983716127370898410, guid: eb38b3c92743fb242a291d0844bb0eb5, type: 3}
